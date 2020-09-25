@@ -96,7 +96,7 @@ app.post('/event', (req, res) => {
         likes: 0
     }
     firestore.collection("Events").add(ev).then(ret => {
-        // return events using shared method that adds id
+        // return events using shared method that adds __id
         getEvents(req, res);
     });
 });
@@ -106,6 +106,7 @@ app.post('/event', (req, res) => {
 // If increment is false, a like is removed.
 function changeLikes(req, res, id, increment) {
     // return the existing objct
+    console.log("meghyun");
     firestore.collection("Events").doc(id).get()
         .then((snapshot) => {
             const el = snapshot.data();
@@ -123,11 +124,11 @@ function changeLikes(req, res, id, increment) {
             // do the update
             firestore.collection("Events")
                 .doc(id).update(el).then((ret) => {
-                    // return events using shared method that adds id
+                    // return events using shared method that adds __id
                     getEvents(req, res);
                 });
         })
-        .catch(err => { console.log(err) });
+        .catch(err => { console.log("meghyun: " + err) });
 }
 
 // put because this is an update. Passes through to shared method.
