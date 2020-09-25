@@ -58,7 +58,7 @@ function getEvents(req, res) {
                     //get data
                     const el = element.data();
                     //get internal firestore id
-                    el._id = element.id;
+                    el.id = element.id;
                     //add object to array
                     ret.events.push(el);
                 }, this);
@@ -96,7 +96,7 @@ app.post('/event', (req, res) => {
         likes: 0
     }
     firestore.collection("Events").add(ev).then(ret => {
-        // return events using shared method that adds __id
+        // return events using shared method that adds id
         getEvents(req, res);
     });
 });
@@ -123,7 +123,7 @@ function changeLikes(req, res, id, increment) {
             // do the update
             firestore.collection("Events")
                 .doc(id).update(el).then((ret) => {
-                    // return events using shared method that adds __id
+                    // return events using shared method that adds id
                     getEvents(req, res);
                 });
         })
